@@ -1,3 +1,5 @@
+<?php  include_once "dbconnection.php";?>
+
 <html>
 <head>
 <style>
@@ -6,6 +8,7 @@
 <script>
 function valid() 
 {
+  //alert("hello")
   var x = document.forms["f_form"]["name"].value;
   var y = document.forms["f_form"]["email"].value;
   var z = document.forms["f_form"]["mobile"].value;
@@ -78,7 +81,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
    else{
     $gender = test_input($_POST["gender"]);
        }
+
+// print_r($_POST); die();
+
+$name=$_POST['name'];  
+$lastname = $_POST['lastname'];
+$email = $_POST['email'];
+$mobile = $_POST['mobile'];
+$gender = $_POST['gender'];
+
+
+mysqli_query($connection,"INSERT INTO user set name = '$name', lastname = '$lastname', email = '$email' , mobile = '$mobile', gender = '$gender'");
+
+//echo "hiiiii";
+       header("location: validation.php");
+
 } 
+
+
 Function test_input($data){
   $data = trim($data);
   $data = stripslashes($data);

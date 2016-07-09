@@ -17,8 +17,18 @@ function valid()
   }
   if (y == null || y == "")
   {
-    alert("email is mandetory");
+    alert("email is mandetory")
     return false;
+  }
+  else{
+    var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    if (!filter.test(y)) {
+    alert('Please provide a valid email address');
+    //email.focus;
+    return false;
+    //alert("email is mandetory");
+    //return false;
+      }
   }
   if (z == null || z == "")
   {
@@ -30,7 +40,16 @@ function valid()
     alert("mention your gender");
     return false;
   }
-} 
+}
+
+//function emailvalid()
+//{
+//  var email = document.getelementById('email_id');
+//  var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
+//  if(!filter.test(email.value))
+
+
 </script>
 </head>
 <body>

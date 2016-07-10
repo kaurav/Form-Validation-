@@ -1,4 +1,22 @@
 <?php  include_once "dbconnection.php";?>
+<?php
+//print_r($_SESSION['name']);die();
+
+session_start();
+$_SESSION['name'] = isset($_POST['name']) ? $_POST['name'] :1;
+//$_SESSION['lastname']=$_POST[''];
+//echo $_SESSION['name'];
+//echo "hello";
+if(isset($_SESSION['name']))
+{
+  echo "session enabled";
+}
+else
+{
+  echo "disabled";
+}
+
+?>
 
 <html>
 <head>

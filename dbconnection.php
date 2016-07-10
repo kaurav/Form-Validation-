@@ -9,10 +9,10 @@ $connection = new mysqli($server, $user, $password);
 if($connection->connect_error){
 die("connection failed". $connection->connect_error);
 }
-echo "connected successfully";
+//echo "connected successfully";
 
 if($connection->query($dbname) === TRUE) {
-  echo "DB selected ";
+//  echo "DB selected ";
 }else{
 echo "error: while selecting db: ". $connection->error;
 }

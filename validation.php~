@@ -3,6 +3,25 @@
 <?php
 $errname = $erremail = $errmobile = $errgender ="";
 $name = $lastname = $email = $mobile = $gender = $textarea = "";
+
+if(isset($_GET['id']) && !empty($_GET['id']))
+{
+  
+$result = mysqli_query($connection,"select * from user where id = '".$_GET['id']."'");
+
+
+  while($res = $result->fetch_object()) {
+    $name = $res->name; 
+    $lastname = $res->lastname;
+    $email = $res->email;
+    $mobile = $res->mobile;
+    $gender = $res->gender;
+    $textarea = $res->textarea;
+
+}
+
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
   $flag = true;
@@ -72,7 +91,7 @@ exit();
 
 } 
 }
-Function test_input($data){
+function test_input($data){
   $data = trim($data);
   $data = stripslashes($data);
   $data = htmlspecialchars($data);
@@ -85,6 +104,22 @@ if(isset($_SESSION['message']))
   unset($_SESSION['message']);
 }
 
+/*
+
+echo $name;
+echo "<br>";
+echo $lastname;
+echo "<br>";
+echo $email;
+echo "<br>";
+echo $mobile;
+echo "<br>";
+echo $gender;
+echo "<br>";
+echo $textarea;
+echo "<br>";
+
+die();*/
 ?>
 
 
@@ -152,20 +187,20 @@ function valid()
 Name = <input type="text" name="name" value="<?php echo $name;?>">
 <span class="error">* <?php echo $errname;?></span>
 <br><br>
-Last Name: <input type="text" name="lastname">
+Last Name: <input type="text" name="lastname" value="<?php echo $lastname;?>">
 <br><br>
-E-mail: <input type="text" name="email">
+E-mail: <input type="text" name="email" value="<?php echo $email;?>">
 <span class="error">* <?php echo $erremail;?> </span>
 <br><br>
-Mobile no: Name = <input type="text" name="mobile">
+Mobile no: Name = <input type="text" name="mobile" value="<?php echo $mobile;?>">
 <span class="error">* <?php echo $errmobile;?> </span>
 <br><br>
 Gender:
-<input type="radio" name="gender" value="female">Female
-<input type="radio" name="gender" value="male">Male
+<input type="radio" name="gender" value="female" <?php if($gender == 'female'){ echo 'checked = "checked"';} ?> >Female
+<input type="radio" name="gender" value="male" <?php if($gender == 'male'){ echo 'checked = "checked"';} ?> >Male
 <span class="error">* <?php echo $errgender;?></span>
 <br><br>
-Comment: <textarea name="textarea" rows="5" cols="40"></textarea>
+Comment: <textarea name="textarea" rows="5" cols="40" value="<?php echo $textarea;?>"></textarea>
 <br><br>
 <input type="submit" name="submit" value="Submit">
 </form>
@@ -190,12 +225,14 @@ echo $gender;
 <th>Mobile</th>
 <th>Gender</th>
 <th>Comment</th>
+<th>Action</th>
 </tr>
 <?php
 
 $result = mysqli_query($connection,"select * from user");
 $i=1;
 while($res = $result->fetch_object()) {
+  //<input type="text" name="edit" value="edit">
 //echo $i;
 //print_r($res);
 
@@ -213,6 +250,7 @@ while($res = $result->fetch_object()) {
 <td><?php echo $res->mobile; ?></td>
 <td><?php echo $res->gender; ?></td>
 <td><?php echo $res->textarea; ?></td>
+<td><a href="validation.php?id=<?php echo $res->id; ?>">edit </a></td>
 </tr>
 <?php } ?>
 </table>

@@ -1,3 +1,77 @@
+<?php  include_once "dbconnection.php";?>
+
+<?php
+$errname = $erremail = $errmobile = $errgender ="";
+$name = $lastname = $email = $mobile = $gender = $textarea = "";
+if ($_SERVER["REQUEST_METHOD"] == "POST")
+{
+  $flag = true;
+  if(empty($_POST["name"])){
+    $errname = "name is required";
+    $flag= false;
+  }
+  else{
+    $name = test_input($_POST["name"]);
+      }
+  if(empty($_POST["email"])){
+    $erremail = "enter email plz";
+    $flag = false;
+  }
+  else{
+    $email = test_input($_POST["email"]);
+      }
+  if(empty($_POST["mobile"])){
+    $errmobile = "enter ur mobile";
+    $flag = false;
+  }
+
+  else{
+    $mobile = test_input($_POST["mobile"]);
+      }
+  if(empty($_POST["gender"])){
+    $errgender = "gender ";
+    $flag = false;
+  }
+   else{
+    $gender = test_input($_POST["gender"]);
+       }
+
+// print_r($_POST); die();
+
+$name=$_POST['name'];  
+$lastname = $_POST['lastname'];
+$email = $_POST['email'];
+$mobile = $_POST['mobile'];
+$gender = isset($_POST['gender']) ? $_POST['gender'] : "";
+$textarea = $_POST['textarea'];
+
+if($flag == true){
+
+mysqli_query($connection,"INSERT INTO user set name = '$name', lastname = '$lastname', email = '$email' , mobile = '$mobile', gender = '$gender', textarea = '$textarea'");
+
+$_SESSION['message'] = "You are done submitting";
+
+       header("location: validation.php");
+exit();
+
+} 
+}
+Function test_input($data){
+  $data = trim($data);
+  $data = stripslashes($data);
+  $data = htmlspecialchars($data);
+}
+
+if(isset($_SESSION['message']))
+{
+  echo ($_SESSION['message']);
+
+  unset($_SESSION['message']);
+}
+
+?>
+
+
 <html>
 <head>
 <style>
@@ -6,10 +80,13 @@
 <script>
 function valid() 
 {
+
+  //alert("hello")
   var x = document.forms["f_form"]["name"].value;
   var y = document.forms["f_form"]["email"].value;
   var z = document.forms["f_form"]["mobile"].value;
   var a = document.forms["f_form"]["gender"].value;
+  
   if (x == null || x == "")
   {
     alert("name is mandetory");
@@ -53,40 +130,9 @@ function valid()
 </script>
 </head>
 <body>
-<?php
-$errname = $erremail = $errmobile = $errgender ="";
-$name = $lastname = $email = $mobile = $gender = $textarea = "";
-if ($_SERVER["REQUEST_METHOD"] == "POST")
-{
-  if(empty($_POST["name"])){
-    $errname = "name is required";}
-  else{
-    $name = test_input($_POST["name"]);
-      }
-  if(empty($_POST["email"])){
-    $erremail = "enter email plz";}
-  else{
-    $email = test_input($_POST["email"]);
-      }
-  if(empty($_POST["mobile"])){
-    $errmobile = "enter ur mobile";}
-  else{
-    $mobile = test_input($_POST["mobile"]);
-      }
-  if(empty($_POST["gender"])){
-    $errgender = "gender ";}
-   else{
-    $gender = test_input($_POST["gender"]);
-       }
-} 
-Function test_input($data){
-  $data = trim($data);
-  $data = stripslashes($data);
-  $data = htmlspecialchars($data);
-}
-?>
 
-<form method = "POST" name = "f_form" action="<?php echo htmlspecialchars($_SERVER["php_self"]); ?>" onsubmit="return valid()">
+
+<form method = "POST" name = "f_form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" > <!--onsubmit="return valid()"-->
 Name = <input type="text" name="name">
 <span class="error">* <?php echo $errname;?></span>
 <br><br>
@@ -119,6 +165,45 @@ echo $mobile;
 echo "<br>";
 echo $gender;
 ?>
+
+<table style="12" border="1">
+<tr>
+<th>name</th>
+<th>Last Name</th>
+<th>E-mail</th>
+<th>Mobile</th>
+<th>Gender</th>
+<th>Comment</th>
+</tr>
+<?php
+
+$result = mysqli_query($connection,"select * from user");
+$i=1;
+while($res = $result->fetch_object()) {
+//echo $i;
+//print_r($res);
+
+//echo $res->name;
+//echo "<br><br>";
+//$i++;
+
+
+?>
+
+<tr>
+<td><?php echo $res->name; ?></td>
+<td><?php echo $res->lastname; ?></td>
+<td><?php echo $res->email; ?></td>
+<td><?php echo $res->mobile; ?></td>
+<td><?php echo $res->gender; ?></td>
+<td><?php echo $res->textarea; ?></td>
+</tr>
+<?php } ?>
+</table>
+
+
+
+
 </body>
 </html>
 

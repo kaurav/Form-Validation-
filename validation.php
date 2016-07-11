@@ -5,7 +5,7 @@ $errname = $erremail = $errmobile = $errgender ="";
 $name = $lastname = $email = $mobile = $gender = $textarea = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
-  $Flag = true;
+  $flag = true;
   if(empty($_POST["name"])){
     $errname = "name is required";
     $flag= false;
@@ -17,9 +17,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     $erremail = "enter email plz";
     $flag = false;
   }
+  elseif(!eregi('^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+.([a-zA-Z]{2,4})$',$_REQUEST['email']))
+    {
+    $erremail = "invalid email address"; //die();
+    $flag = false; 
+    }
+  
   else{
-    $email = test_input($_POST["email"]);
+   $result = mysqli_query($connection,"select email from user where email = '".$_REQUEST['email']."'");
+
+    //print_r($result->num_rows);die();
+      
+      
+     // $email = test_input($_POST["email"]);
+      if($result->num_rows > 0)
+      {
+        $erremail="already exists";
+        $flag= false;
       }
+}
   if(empty($_POST["mobile"])){
     $errmobile = "enter ur mobile";
     $flag = false;
@@ -43,10 +59,11 @@ $lastname = $_POST['lastname'];
 $email = $_POST['email'];
 $mobile = $_POST['mobile'];
 $gender = isset($_POST['gender']) ? $_POST['gender'] : "";
+$textarea = $_POST['textarea'];
 
 if($flag == true){
 
-mysqli_query($connection,"INSERT INTO user set name = '$name', lastname = '$lastname', email = '$email' , mobile = '$mobile', gender = '$gender'");
+mysqli_query($connection,"INSERT INTO user set name = '$name', lastname = '$lastname', email = '$email' , mobile = '$mobile', gender = '$gender', textarea = '$textarea'");
 
 $_SESSION['message'] = "You are done submitting";
 
@@ -132,7 +149,7 @@ function valid()
 
 
 <form method = "POST" name = "f_form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" > <!--onsubmit="return valid()"-->
-Name = <input type="text" name="name">
+Name = <input type="text" name="name" value="<?php echo $name;?>">
 <span class="error">* <?php echo $errname;?></span>
 <br><br>
 Last Name: <input type="text" name="lastname">
@@ -164,6 +181,44 @@ echo $mobile;
 echo "<br>";
 echo $gender;
 ?>
+
+<table style="12" border="1">
+<tr>
+<th>name</th>
+<th>Last Name</th>
+<th>E-mail</th>
+<th>Mobile</th>
+<th>Gender</th>
+<th>Comment</th>
+</tr>
+<?php
+
+$result = mysqli_query($connection,"select * from user");
+$i=1;
+while($res = $result->fetch_object()) {
+//echo $i;
+//print_r($res);
+
+//echo $res->name;
+//echo "<br><br>";
+//$i++;
+
+
+?>
+
+<tr>
+<td><?php echo $res->name; ?></td>
+<td><?php echo $res->lastname; ?></td>
+<td><?php echo $res->email; ?></td>
+<td><?php echo $res->mobile; ?></td>
+<td><?php echo $res->gender; ?></td>
+<td><?php echo $res->textarea; ?></td>
+</tr>
+<?php } ?>
+</table>
+
+
+
+
 </body>
 </html>
-

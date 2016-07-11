@@ -1,4 +1,5 @@
 <?php  include_once "dbconnection.php";?>
+<<<<<<< HEAD
 
 <?php
 $errname = $erremail = $errmobile = $errgender ="";
@@ -67,11 +68,31 @@ if(isset($_SESSION['message']))
   echo ($_SESSION['message']);
 
   unset($_SESSION['message']);
+=======
+<?php
+//print_r($_SESSION['name']);die();
+
+session_start();
+$_SESSION['name'] = isset($_POST['name']) ? $_POST['name'] :1;
+//$_SESSION['lastname']=$_POST[''];
+//echo $_SESSION['name'];
+//echo "hello";
+if(isset($_SESSION['name']))
+{
+  echo "session enabled";
+}
+else
+{
+  echo "disabled";
+>>>>>>> f438975f4e1c018a50569c87c82ad2556fc48f54
 }
 
 ?>
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> f438975f4e1c018a50569c87c82ad2556fc48f54
 <html>
 <head>
 <style>
@@ -80,7 +101,10 @@ if(isset($_SESSION['message']))
 <script>
 function valid() 
 {
+<<<<<<< HEAD
 
+=======
+>>>>>>> f438975f4e1c018a50569c87c82ad2556fc48f54
   //alert("hello")
   var x = document.forms["f_form"]["name"].value;
   var y = document.forms["f_form"]["email"].value;
@@ -130,6 +154,58 @@ function valid()
 </script>
 </head>
 <body>
+<<<<<<< HEAD
+=======
+<?php
+$errname = $erremail = $errmobile = $errgender ="";
+$name = $lastname = $email = $mobile = $gender = $textarea = "";
+if ($_SERVER["REQUEST_METHOD"] == "POST")
+{
+  if(empty($_POST["name"])){
+    $errname = "name is required";}
+  else{
+    $name = test_input($_POST["name"]);
+      }
+  if(empty($_POST["email"])){
+    $erremail = "enter email plz";}
+  else{
+    $email = test_input($_POST["email"]);
+      }
+  if(empty($_POST["mobile"])){
+    $errmobile = "enter ur mobile";}
+  else{
+    $mobile = test_input($_POST["mobile"]);
+      }
+  if(empty($_POST["gender"])){
+    $errgender = "gender ";}
+   else{
+    $gender = test_input($_POST["gender"]);
+       }
+
+// print_r($_POST); die();
+
+$name=$_POST['name'];  
+$lastname = $_POST['lastname'];
+$email = $_POST['email'];
+$mobile = $_POST['mobile'];
+$gender = $_POST['gender'];
+
+
+mysqli_query($connection,"INSERT INTO user set name = '$name', lastname = '$lastname', email = '$email' , mobile = '$mobile', gender = '$gender'");
+
+//echo "hiiiii";
+       header("location: validation.php");
+
+} 
+
+
+Function test_input($data){
+  $data = trim($data);
+  $data = stripslashes($data);
+  $data = htmlspecialchars($data);
+}
+?>
+>>>>>>> f438975f4e1c018a50569c87c82ad2556fc48f54
 
 
 <form method = "POST" name = "f_form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" > <!--onsubmit="return valid()"-->

@@ -16,8 +16,21 @@ if($connection->query($dbname) === TRUE) {
 }else{
 echo "error: while selecting db: ". $connection->error;
 }
+<<<<<<< HEAD
 
 
+=======
+// $name='avi';
+// $lastname = 'kaur';
+// $email = 'avikaur@gmail.com';
+// $mobile = '35342';
+// $gender = 'm';
+// mysqli_query($connection,"INSERT INTO user set name = '$name', lastname = '$lastname', email = '$email' , mobile = '$mobile', gender = '$gender'");
+
+
+// $connection->close();
+
+>>>>>>> f438975f4e1c018a50569c87c82ad2556fc48f54
 
 $connection->close();
 ?>

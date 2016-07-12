@@ -47,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 
    // print_r($result->num_rows);die();
       
-      
+     // echo $result->num_rows;
      // $email = test_input($_POST["email"]);
       if($result->num_rows > 0)
       {

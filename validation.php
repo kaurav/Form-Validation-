@@ -45,9 +45,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
   else{
    $result = mysqli_query($connection,"select email from user where email = '".$_REQUEST['email']."'");
 
-    print_r($result->num_rows);die();
+   // print_r($result->num_rows);die();
       
-      
+      echo $result->num_rows;
      // $email = test_input($_POST["email"]);
       if($result->num_rows > 0)
       {

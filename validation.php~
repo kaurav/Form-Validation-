@@ -4,7 +4,7 @@
 $errname = $erremail = $errmobile = $errgender ="";
 $name = $lastname = $email = $mobile = $gender = $textarea = "";
 
-if(isset($_GET['id']) && !empty($_GET['id']))
+if(isset($_GET['id']) && !empty($_GET['id'])) //it checks whether an id is set or empty
 {
   
 $result = mysqli_query($connection,"select * from user where id = '".$_GET['id']."'");
@@ -25,7 +25,7 @@ $result = mysqli_query($connection,"select * from user where id = '".$_GET['id']
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
   $flag = true;
-  if(empty($_POST["name"])){
+  if(empty($_POST["name"])){	//checks whether name is empty or not, if yes then prompt a user to give input
     $errname = "name is required";
     $flag= false;
   }

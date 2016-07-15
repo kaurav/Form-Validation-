@@ -4,15 +4,16 @@
 $errname = $erremail = $errmobile = $errgender ="";
 $name = $lastname = $email = $mobile = $gender = $textarea = "";
 
-if(isset($_GET['id']) && !empty($_GET['id'])) //it checks whether an id is set or empty
+ // edit functionality here.... 
+
+if(isset($_GET['id']) && !empty($_GET['id'])) //whether id is set or not empty
 {
-  
-$result = mysqli_query($connection,"select * from user where id = '".$_GET['id']."'");
+$result = mysqli_query($connection,"select * from user where id = '".$_GET['id']."'"); //retireve the contents from user table where id = get_id
 
 
-  while($res = $result->fetch_object()) {
-    $name = $res->name; 
-    $lastname = $res->lastname;
+  while($res = $result->fetch_object()) { //while fetching objects 
+    $name = $res->name;   //fetch name via res->name
+    $lastname = $res->lastname; //lastname
     $email = $res->email;
     $mobile = $res->mobile;
     $gender = $res->gender;
@@ -21,11 +22,12 @@ $result = mysqli_query($connection,"select * from user where id = '".$_GET['id']
 }
 
 }
+ // edit functionality finishes here.... 
 
-if ($_SERVER["REQUEST_METHOD"] == "POST")
+if ($_SERVER["REQUEST_METHOD"] == "POST") 
 {
   $flag = true;
-  if(empty($_POST["name"])){	//checks whether name is empty or not, if yes then prompt a user to give input
+  if(empty($_POST["name"])){
     $errname = "name is required";
     $flag= false;
   }
@@ -36,18 +38,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     $erremail = "enter email plz";
     $flag = false;
   }
-  elseif(!eregi('^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+.([a-zA-Z]{2,4})$',$_REQUEST['email']))
+  elseif(!eregi('^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+.([a-zA-Z]{2,4})$',$_REQUEST['email'])) // check if the entered email is not according to the specified format then give error msg.
     {
     $erremail = "invalid email address"; //die();
     $flag = false; 
     }
   
   else{
-   $result = mysqli_query($connection,"select email from user where email = '".$_REQUEST['email']."'");
+   $result = mysqli_query($connection,"select email from user where email = '".$_REQUEST['email']."'"); //here it will check for duplicate email entry.
 
-   // print_r($result->num_rows);die();
+    //print_r($result->num_rows);die();
       
-     // echo $result->num_rows;
+      
      // $email = test_input($_POST["email"]);
       if($result->num_rows > 0)
       {
@@ -73,21 +75,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 
 // print_r($_POST); die();
 
+//variables created here....
 $name=$_POST['name'];  
 $lastname = $_POST['lastname'];
 $email = $_POST['email'];
 $mobile = $_POST['mobile'];
 $gender = isset($_POST['gender']) ? $_POST['gender'] : "";
 $textarea = $_POST['textarea'];
+//creation finished here...
 
-if($flag == true){
+if($flag == true){ //if flag gets true means all entries are valid then insert them into table using following.
 
 mysqli_query($connection,"INSERT INTO user set name = '$name', lastname = '$lastname', email = '$email' , mobile = '$mobile', gender = '$gender', textarea = '$textarea'");
+
+
+
+if ($connection->errno) {
+echo $connection->error ;
+die();
+  }
 
 $_SESSION['message'] = "You are done submitting";
 
        header("location: validation.php");
-exit();
+    exit();
 
 } 
 }
@@ -259,4 +270,4 @@ while($res = $result->fetch_object()) {
 
 
 </body>
-</html>
+</html> 

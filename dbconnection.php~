@@ -1,7 +1,8 @@
 <?php 
+session_start();
 $server = "localhost";
 $user = "root";
-$password = "avi";
+$password = "";
 $dbname = "use zabiusassignment";
 
 $connection = new mysqli($server, $user, $password);
@@ -9,17 +10,13 @@ $connection = new mysqli($server, $user, $password);
 if($connection->connect_error){
 die("connection failed". $connection->connect_error);
 }
-echo "connected successfully";
+// echo "connected successfully";
 
 if($connection->query($dbname) === TRUE) {
-  echo "DB selected ";
+  // echo "DB selected ";
 }else{
 echo "error: while selecting db: ". $connection->error;
 }
-<<<<<<< HEAD
-
-
-=======
 // $name='avi';
 // $lastname = 'kaur';
 // $email = 'avikaur@gmail.com';
@@ -29,8 +26,11 @@ echo "error: while selecting db: ". $connection->error;
 
 
 // $connection->close();
+//--------------------------------functions---------------------------
 
->>>>>>> f438975f4e1c018a50569c87c82ad2556fc48f54
+function query($query)
+{
+	$
+}
 
-$connection->close();
 ?>

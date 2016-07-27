@@ -3,7 +3,7 @@
 include_once "database.php"; 
 
 
-// there required, require_once, include, include_once, there are two ways to include files in php find it.
+
 $error_name = '';
 $error_lastname = '';
 $error_gender = '';

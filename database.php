@@ -2,10 +2,10 @@
 $server = "localhost";
 $user = "root";
 $password = "";
-$database = "use student_data";
+$database = "form";
 
 global $connection;
-$connection = new mysqli($server,$user,$password);
+$connection = new mysqli($server,$user,$password,$database);
 // if (isset($connection))
 // {
 // 	echo "done";
@@ -35,23 +35,36 @@ return $validatarray;
 }
 function escape($value) {
 	global $connection;
- $connection->real_escape_string($value);
+ 	return $connection->real_escape_string($value);
 }
 
 function insertstudent($data) {
-global $connection;
-
-$name = escape($data['name']);
+//dob shuffle krna with limit og 5 year
+// means it should be incremented. usin php date function.using rand function and str to time functions. try bootstrapping.
+$name = escape($data['name']); 
 $lastname = escape($data['lastname']);
 $gender = escape($data['gender']);
 $dob = escape($data['dob']);
 $email = escape($data['email']);
 
-mysqli_query($connection,"insert into student_data set name = '$name',lastname = '$lastname',email = '$email',dob = '$dob',gender = '$gender' "); 
-}
 
-
-function selectionstudent($data){
+$query = query("INSERT INTO student_data SET name = '$name', lastname = '$lastname', email = '$email', dob = '$dob', gender = '$gender' "); 
 
 }
+
+function query($sql){
+	global $connection;
+	$var = mysqli_query($connection, $sql);
+
+	if ($connection->error)
+  {
+  echo $connection->error;die();
+  }
+  return $var;
+}
+// function selectionstudent(){
+
+// $query = query("select * from student_data");
+// echo "select * from student_data";die();
+// }
 ?>

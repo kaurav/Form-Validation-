@@ -70,7 +70,7 @@ if(errors.length > 0){
 }else{
 e.preventDefault();
 
-var formData = {name:"ravi",age:"31"};
+//var formData = {name:"ravi",age:"31"};
 $.ajax({
 
             url: 'insertdata.php',

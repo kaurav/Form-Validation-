@@ -1,4 +1,6 @@
-<?php
+<?php 
+
+header('Content-type: application/json');	
 
 $server = "localhost";
 $user = "root";
@@ -12,21 +14,16 @@ if($connection->connect_error){
 {
 	//echo "connected";
 }
+ 
 
+$res = mysqli_query($connection,"SELECT * FROM adress");
 
-$address = $_POST['address'];
+$result = array();
+while($row = $res->fetch_assoc()){
 
+	$result[] = $row;
 
-foreach ($_POST['address'] as $address) {
-
-	//print_r($address);die();
-
-	mysqli_query($connection,"INSERT into adress set `Address` = '$address'");
-	//echo "INSERT into adress set `Address` = '$address'";die();
-	
 }
 
-
-
-
+echo json_encode(array('result'=>$result));
 ?>

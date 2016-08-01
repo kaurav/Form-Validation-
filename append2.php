@@ -111,9 +111,13 @@ if(errors.length > 0){
 	$('#errmesg').html(string+"rows are empty");
 }else{
 e.preventDefault();
+<<<<<<< HEAD
 // $("#submit1").submit(function(){
 // 	var Address = $('#')
 // })
+=======
+
+>>>>>>> 5f0fd2578ce765dc4ff6f83c63adef4d1082a6e7
 //var formData = {name:"ravi",age:"31"};
 $.ajax({
 

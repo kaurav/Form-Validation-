@@ -17,18 +17,24 @@ $("document").ready(function(){
 						
 
 		$("#tbid").append("<tr id ='"+rowid+"'> <td>Name</td> <td class = 'common'><input type='text' id='"+name+"' name='"+name+"'/></td><td>Email</td> <td class = 'common'><input type='text' id='"+email+"' name='"+email+"'/></td> </br></tr>");
- 		e.preventDefault();
-						
+ 		
+		var total = $('#tbid tr').length; //finding the length of array
+         $('#counter').html(total);
+         e.preventDefault();
+
 	});
 // add ends here...
 
 //delete's functionality goes here...
 	$("#delete").on('click',function(e){
-		$("#tbid tr:last").remove();
-		e.preventDefault();
+		$("#tabid tr:last").remove();
+		
+		var total = $('#tbid tr').length; //finding the length of array
+         $('#counter').html(total);
+         e.preventDefault();
 	
 	});
-
+		
 // Fetch button's functionality
 
 	
@@ -41,7 +47,7 @@ $("#fetch").on("click",function(e){
 	        url: "selectalldata.php",             
 	        success: function(response){  
 
-var name = "name"+inc.toString();
+		var name = "name"+inc.toString();
 		var email = "email"+inc.toString();
 		 	var n = "name"+count.toString(); 
 		  	var name = "name"+count.toString();
@@ -63,7 +69,7 @@ var name = "name"+inc.toString();
 	
 
            }
-            // alert(JSON.stringify(arr));
+             //alert(JSON.stringify(arr));
         }
 });
 
@@ -72,17 +78,16 @@ var name = "name"+inc.toString();
 
 });
 
-});
+
 
 //fetch button ends here...
 
 // clear starts here...
-$('#clear').on("click", function(e){
-    $('#tabid tr').remove();
-    e.preventDefault();
-
-     var total = $('#tb tr').length;
-         $('#counter').html(total);
+$("#clear").on("click", function(e){
+    $("#tabid tr").remove();
+      var total = $('#tbid tr').length;
+      $('#counter').html(total);
+      e.preventDefault();
 });
 // clear ends here...
 
@@ -196,6 +201,8 @@ function submitform() {
 		
 }
 
+});
+
 </script>
 </head>
 
@@ -205,6 +212,7 @@ function submitform() {
 	<button id="delete">Delete</button>
 	<button id="fetch">Fetch</button>
 	<button id="clear">Clear</button>
+	rows:<span id="counter"></span>
 	<span id="emptyinputfields"></span>
 	
 <form id="formid" method="post" action="">

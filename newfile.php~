@@ -6,7 +6,7 @@
 
 $("document").ready(function(){
 
-	var inc = 0;
+	var inc = 0, count = 0;
 	// Add Button Functionality
 	$("#add").on("click",function(e){ 
 		inc++;
@@ -17,50 +17,59 @@ $("document").ready(function(){
 						
 
 		$("#tbid").append("<tr id ='"+rowid+"'> <td>Name</td> <td class = 'common'><input type='text' id='"+name+"' name='"+name+"'/></td><td>Email</td> <td class = 'common'><input type='text' id='"+email+"' name='"+email+"'/></td> </br></tr>");
- 		e.preventDefault();
-						
+ 		
+		var total = $('#tbid tr').length; //finding the length of array
+         $('#counter').html(total);
+         e.preventDefault();
+
 	});
 // add ends here...
 
 //delete's functionality goes here...
 	$("#delete").on('click',function(e){
-		$("#tbid tr:last").remove();
-		e.preventDefault();
+		$("#tabid tr:last").remove();
+		
+		var total = $('#tbid tr').length; //finding the length of array
+         $('#counter').html(total);
+         e.preventDefault();
 	
 	});
-
+		
 // Fetch button's functionality
 
+	
 $("#fetch").on("click",function(e){
 			count++;
-		 	var n = "id"+count.toString(); 
+
+		
+	      	$.ajax({    
+	        type: "POST",
+	        url: "selectalldata.php",             
+	        success: function(response){  
+
+		var name = "name"+inc.toString();
+		var email = "email"+inc.toString();
+		 	var n = "name"+count.toString(); 
 		  	var name = "name"+count.toString();
 
-      $.ajax({    //create an ajax request to load_page.php
-        type: "POST",
-        url: "selectdata.php",             
-        success: function(response){                    
-           
-
-           var arr = response['result'];
-           if(arr.length > 0){
-           	$("#clearout").trigger( "click" );
+	        var arr = response['data']; 
+	        var len = arr.length;
+	        //console.log(len);
+	        if(arr.length > 0){
+	        $("#clear").trigger("click");
 
            }
-
-
 
            for (var i = 0 ; i < arr.length; i++){
 			
-           	var value = arr[i]['Address'];	
+           	var value = arr[i] 
+           	
 
-           	alert(value);
-
-			$("#tb").append("<tr id='"+n+"' class='addresfield'> <td>Address</td><td><input name='address[]' class='hello' type='text' value = '"+value+"'/></br></td></tr>");
+			$("#tbid").append("<tr id='"+n+"' class='addresfield'> <td>NAME </td><td><input name= '"+name+"'class='hello' type='text' value = '"+value['Name']+"'/></td><td>Email </td><td><input name='"+email+"' class='hello' type='text' value = '"+value['Email']+"'/></br></td></tr>");
 	
 
            }
-            alert(JSON.stringify(arr));
+             //alert(JSON.stringify(arr));
         }
 });
 
@@ -69,30 +78,16 @@ $("#fetch").on("click",function(e){
 
 });
 
-// $("#fetch").on("click",function(e){
-		
-// 		$.ajax({
-//             url: 'selectalldata.php',
-//             type: 'POST',
-//             data: $('#formid').serialize(),
-                        
-//             success: function(result){
-//                 // alert("submitted");
 
-//                }
-//          });         
-// 	e.preventDefault();
-
-// });
 
 //fetch button ends here...
-// clear starts here...
-$('#clear').on("click", function(e){
-    $('#tabid tr').remove();
-    e.preventDefault();
 
-     var total = $('#tb tr').length;
-         $('#counter').html(total);
+// clear starts here...
+$("#clear").on("click", function(e){
+    $("#tabid tr").remove();
+      var total = $('#tbid tr').length;
+      $('#counter').html(total);
+      e.preventDefault();
 });
 // clear ends here...
 
@@ -183,7 +178,7 @@ $("#submit").on("click",function(e){
 
 
 
-});
+
 
 
 
@@ -206,6 +201,8 @@ function submitform() {
 		
 }
 
+});
+
 </script>
 </head>
 
@@ -215,6 +212,7 @@ function submitform() {
 	<button id="delete">Delete</button>
 	<button id="fetch">Fetch</button>
 	<button id="clear">Clear</button>
+	rows:<span id="counter"></span>
 	<span id="emptyinputfields"></span>
 	
 <form id="formid" method="post" action="">
@@ -226,7 +224,7 @@ function submitform() {
 		</tbody>
 	</table>
 	<input type="submit" name="submit" id="submit">
-
+<!-- <div id="response"></div> -->
 	
 </form>
 

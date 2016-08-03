@@ -6,7 +6,7 @@
 
 $("document").ready(function(){
 
-	var inc = 0, count = 0;
+	var inc = 0;
 	// Add Button Functionality
 	$("#add").on("click",function(e){ 
 		inc++;
@@ -31,39 +31,36 @@ $("document").ready(function(){
 
 // Fetch button's functionality
 
-	
 $("#fetch").on("click",function(e){
 			count++;
-
-		
-	      	$.ajax({    
-	        type: "POST",
-	        url: "selectalldata.php",             
-	        success: function(response){  
-
-var name = "name"+inc.toString();
-		var email = "email"+inc.toString();
-		 	var n = "name"+count.toString(); 
+		 	var n = "id"+count.toString(); 
 		  	var name = "name"+count.toString();
 
-	        var arr = response['data']; 
-	        var len = arr.length;
-	        //console.log(len);
-	        if(arr.length > 0){
-	        $("#clear").trigger("click");
+      $.ajax({    //create an ajax request to load_page.php
+        type: "POST",
+        url: "selectdata.php",             
+        success: function(response){                    
+           
+
+           var arr = response['result'];
+           if(arr.length > 0){
+           	$("#clearout").trigger( "click" );
 
            }
+
+
 
            for (var i = 0 ; i < arr.length; i++){
 			
-           	var value = arr[i] 
-           	
+           	var value = arr[i]['Address'];	
 
-			$("#tbid").append("<tr id='"+n+"' class='addresfield'> <td>NAME </td><td><input name= '"+name+"'class='hello' type='text' value = '"+value['Name']+"'/></td><td>Email </td><td><input name='"+email+"' class='hello' type='text' value = '"+value['Email']+"'/></br></td></tr>");
+           	alert(value);
+
+			$("#tb").append("<tr id='"+n+"' class='addresfield'> <td>Address</td><td><input name='address[]' class='hello' type='text' value = '"+value+"'/></br></td></tr>");
 	
 
            }
-            // alert(JSON.stringify(arr));
+            alert(JSON.stringify(arr));
         }
 });
 
@@ -72,10 +69,23 @@ var name = "name"+inc.toString();
 
 });
 
-});
+// $("#fetch").on("click",function(e){
+		
+// 		$.ajax({
+//             url: 'selectalldata.php',
+//             type: 'POST',
+//             data: $('#formid').serialize(),
+                        
+//             success: function(result){
+//                 // alert("submitted");
+
+//                }
+//          });         
+// 	e.preventDefault();
+
+// });
 
 //fetch button ends here...
-
 // clear starts here...
 $('#clear').on("click", function(e){
     $('#tabid tr').remove();
@@ -173,7 +183,7 @@ $("#submit").on("click",function(e){
 
 
 
-
+});
 
 
 
@@ -216,7 +226,7 @@ function submitform() {
 		</tbody>
 	</table>
 	<input type="submit" name="submit" id="submit">
-<!-- <div id="response"></div> -->
+
 	
 </form>
 

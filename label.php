@@ -24,13 +24,15 @@ $("document").ready(function(){ //------------DOCUMENT------------
 			//-------------ADD---------------
 			
 			$("#add").on("click",function(e){ 
-				var store = $("input:text").val(); //var store = 0;
-				var total = $('#tb tr').length; 
-				var incre = total; 
-				if(total >= store){ 
+				var store = $("input:text").val(); //here we will store the value of input field e.g. 5
+				var total = $('#tb tr').length; // it will count the total number of rows
+				var incre = total; 	//here we are using this variable to generate the value of id in run time.
+				if(total >= store){ 	// here we chaeck the whether total number of row are greatere than or equal to 
+							//value store in store variable then it will execute it otherwise it will skip 
+							// this condition every first time and go for loop.
 							return false;
 					}			
-				for(var i = 0;i<store;i++){  
+				for(var i = 0;i<store;i++){  //here we will generate input fields untill i's value is less than stroe's value
 				incre++;
 				$("#tb").append("<tr><td style='display:none;'><label for ='lbl-"+incre+"' >hello</label></td><td> <input class='label' id='lbl-"+incre+"' type='text'></td><td><input id='input-"+incre+"' type='text'></td><td><button class='button' id = 'lbl-"+incre+"'class='btn btn-primary btn-lg'>ADD</button></td></tr>");		
 			}

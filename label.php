@@ -41,7 +41,7 @@ $("document").ready(function(){ //------------DOCUMENT------------
 //------------------KEYPRESS------------------
 			
 				
-			    $("#tb").on('click','.button', function(e) {
+			    $("#tb").on('click','.button', function(e) { // onclick i want that text input should become its label
 
 			    	var val = $("#tb tr").first().find("input[class='label']").val();
 

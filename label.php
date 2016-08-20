@@ -47,11 +47,11 @@ $("document").ready(function(){ //------------DOCUMENT------------
 
 			    	var id = $(this).attr('id');
 					
-					// var key = e.which;
-					// if (key == 13){
-					// $(".label").replaceWith("val")	
-					// return false;
-					// }
+					 var key = e.which;
+					 if (key == 13){
+					 $(".label").replaceWith("val")	
+					 return false;
+					 }
 
 				
     			console.log(val);
